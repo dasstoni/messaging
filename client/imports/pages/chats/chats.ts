@@ -18,6 +18,7 @@ export class ChatsPage {
     return Observable.of([
       {
         _id: '0',
+        title: 'Ethan Gonzalez',
         picture: 'https://randomuser.me/api/portraits/thumb/men/1.jpg',
         lastMessage: {
           content: 'You on your way?',
@@ -26,6 +27,8 @@ export class ChatsPage {
         }
       },
       {
+        _id: '1',
+        title: 'Bryan Wallace',
         picture: 'https://randomuser.me/api/portraits/thumb/lego/1.jpg',
         lastMessage: {
           content: 'Hey, it\'s me',
@@ -34,6 +37,8 @@ export class ChatsPage {
         }
       },
       {
+        _id: '2',
+        title: 'Avery Stewart',
         picture: 'https://randomuser.me/api/portraits/thumb/women/1.jpg',
         lastMessage: {
           content: 'I should buy a boat',
@@ -42,6 +47,8 @@ export class ChatsPage {
         }
       },
       {
+        _id: '3',
+        title: 'Katie Peterson',
         picture: 'https://randomuser.me/api/portraits/thumb/women/2.jpg',
         lastMessage: {
           content: 'Look at my mukluks!',
@@ -50,11 +57,25 @@ export class ChatsPage {
         }
       },
       {
+        _id: '4',
+        title: 'Ray Edwards',
         picture: 'https://randomuser.me/api/portraits/thumb/men/2.jpg',
         lastMessage: {
           content: 'This is wicked good ice cream.',
           createdAt: Moment().subtract(2, 'weeks').toDate(),
           type: MessageType.TEXT
         }
-      },
+      }
     ]);
+  }
+}
+
+removeChat(chat: Chat): void {
+  this.chats = this.chats.map<Chat[]>(chatsArray => {
+    const chatIndex = chatsArray.indexOf(chat);
+    chatsArray.splice(chatIndex, 1);
+
+    return chatsArray;
+  });
+}
+}
