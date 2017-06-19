@@ -15,3 +15,11 @@
   ],
   "compileOnSave": false
 }
+  "noImplicitAny": false,
+  "types" : [
+    "meteor-typings",
+    "@types/underscore",
+    "@types/meteor-accounts-phone"
+  ]
+},
+  "include" : []
