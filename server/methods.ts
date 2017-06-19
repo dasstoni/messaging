@@ -39,7 +39,9 @@ removeChat(chatId: string): void {
       'User must be logged-in to remove chat');
   }
 
+  check(type, Match.OneOf(String, [ MessageType.TEXT, MessageType.LOCATION ]));
   check(chatId, nonEmptyString);
+  check(content, nonEmptyString);
 
   const chatExists = !!Chats.collection.find(chatId).count();
 
