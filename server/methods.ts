@@ -79,5 +79,11 @@ removeChat(chatId: string): void {
         content: content,
         createdAt: new Date(),
         type: type,
-      },
-  });
+      })
+    };
+  },
+
+  countMessages(): number {
+  return Messages.collection.find().count();
+}
+});
