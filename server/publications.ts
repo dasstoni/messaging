@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { Chats, Messages, Users } from '../imports/collections';
-import { Chat, Message, User } from '../imports/models';
+import { Chats, Messages, Pictures, Users } from '../imports/collections';
+import { Chat, Message, Picture, User } from '../imports/models';
 
 Meteor.publishComposite('users', function(
   pattern: string
@@ -24,8 +24,19 @@ return {
       fields: { profile: 1 },
       limit: 15
     });
-  }
-};
+  },
+
+children: [
+  <PublishCompositeConfig1<User, Picture>> {
+    find: (user) => {
+      return Pictures.collection.find(user.profile.pictureId, {
+        fields: { url: 1 }
+          });
+        }
+      }
+    ]
+  };
+});
 
   return Users.collection.find({}, {
     fields: {
@@ -75,8 +86,30 @@ Meteor.publishComposite('chats', function(): PublishCompositeConfig<Chat> {
           }, {
             fields: { profile: 1 }
           });
+        },
+    children: [
+      <PublishCompositeConfig2<Chat, User, Picture>> {
+        find: (user, chat) => {
+          return Pictures.collection.find(user.profile.pictureId, {
+            fields: { url: 1 }
+          });
         }
       }
     ]
-  };
+  }
+]
+    }
+});
+
+
+Meteor.publish('user', function () {
+  if (!this.userId) {
+    return;
+  }
+
+  const profile = Users.findOne(this.userId).profile || {};
+
+  return Pictures.collection.find({
+    _id: profile.pictureId
+  });
 });
